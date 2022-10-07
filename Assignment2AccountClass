@@ -36,3 +36,260 @@ int main()
 
 	return 0;
 }
+
+// Account.h declares the account class
+//
+#include <string>
+#include "Address.h"
+#include "PhoneNumber.h"
+
+class Account
+{
+private:
+	int id = 0;
+	double balance = 0.0;
+	double annualInterestRate = 0.0;
+	std::string cust_name;
+	//OOD choices
+	Address customer_address;
+	PhoneNumber customer_phoneNumber;
+
+public:
+		int getId();
+
+		Account(int = 0, double = 0.0); // Constructor
+		std::string  get_customer_city();	//get address prototype
+		int get_customer_cell_number(); // get cell number prototype
+		int get_customer_work_number(); // get work number prototype
+		int get_customer_home_number(); // get home number prototype
+		std::string get_customer_street_address_1(); //get street address 1 prototype 
+		std::string get_customer_street_address_2();
+		std::string get_customer_state();
+		std::string get_customer_zip();
+
+
+		void setID(int); // set Account ID
+		void setBalance(double); // set Account Balance
+		void setAnnualInterestRate(double); // Set Annual Interest Rate
+		void setCustomerName(std::string name);
+
+		unsigned int getID() const;
+		double getBalance() const;
+		double getAnnualInterestRate() const;
+
+		double getMonthlyInterestRate() const;
+		double getMonthlyInterest() const;
+		std::string getCustomerName() const;
+
+		void withdraw(double);
+		void deposit(double);
+};
+
+
+// Account.cpp 
+// Source code (Definition) for the account class
+//
+#include <iostream>
+#include "Account.h"
+
+Account::Account(int id, double balance) // constructor initialises each data member
+{
+	setID(id);
+	setBalance(balance);
+}
+
+void Account::setBalance(double newbalance)
+{
+	//add a validation to balance 
+	balance = newbalance;
+}
+
+void Account::setAnnualInterestRate(double newannualInterestRate)
+{
+	annualInterestRate = newannualInterestRate;
+}
+void Account::setCustomerName(std::string name)
+{
+	cust_name = name;
+}
+int Account::getId() {
+	return id;
+}
+
+void Account::setID(int newID)
+{
+	if (newID < 0)
+		id = 0;
+	else
+		id = newID;
+}
+
+unsigned int Account::getID() const
+{
+	return id;
+}
+
+double Account::getBalance() const
+{
+	return balance;
+}
+
+double Account::getAnnualInterestRate() const
+{
+	return annualInterestRate;
+}
+
+double Account::getMonthlyInterestRate() const // ???
+{
+
+	return (annualInterestRate / 12);
+}
+
+double Account::getMonthlyInterest() const
+{
+	// getMonthlyInterest() is to return monthly interest, not the interest rate. 
+	// Monthly interest is balance * monthlyInterestRate.
+
+	return balance * (annualInterestRate / 12);
+}
+
+std::string Account::getCustomerName() const
+{
+	return cust_name;
+}
+
+void Account::withdraw(double withdrawAmount)
+{
+	// withdraw() should checkavailable balance beforewithdraw. 
+	// Throw an Exception if there is no sufficient balance.
+
+	if (balance >= withdrawAmount)
+	{
+		balance -= withdrawAmount;
+
+	}
+	else
+		throw std::invalid_argument("No sufficient balance");
+}
+
+void Account::deposit(double depositAmount)
+{
+	balance += depositAmount;
+
+}
+
+std::string Account::get_customer_city()
+{
+	return customer_address.getCity();
+}
+
+int Account::get_customer_cell_number()
+{
+	return customer_phoneNumber.getCellNumber();
+}
+
+int Account::get_customer_work_number()
+{
+	return customer_phoneNumber.getWorNumber();
+}
+
+int Account::get_customer_home_number()
+{
+	return customer_phoneNumber.getHomeNumber();
+}
+
+std::string Account::get_customer_street_address_1()
+{
+	return customer_address.getStreetAddress1();
+}
+
+std::string Account::get_customer_street_address_2()
+{
+	return customer_address.getStreetAddress2();
+}
+
+std::string Account::get_customer_state()
+{
+	return customer_address.getState();
+}
+
+std::string Account::get_customer_zip()
+{
+	return customer_address.getZipcode();
+}
+
+
+#pragma once
+#include <string>
+
+class Address
+{
+private:
+	std::string streetAddress1;
+	std::string streetAddress2;
+	std::string city;
+	std::string state;
+	std::string zipCode;
+
+public:
+	Address(); 
+	Address(std::string st1, std::string cty, std::string statE, std::string zip);
+	Address(std::string street1, std::string street2, std::string City, std::string State, std::string zip_code);
+	std::string getCity();
+	std::string getStreetAddress1();
+	std::string getStreetAddress2();
+	std::string getState();
+	std::string getZipcode();
+};
+
+#include "Address.h"
+#include <string>
+
+Address::Address() {
+	streetAddress1 = "242222 Champion Dr.";
+	city = "Naperville";
+	state = "IL";
+	zipCode = "60540";
+}
+
+Address::Address(std::string st1, std::string cty, std::string statE, std::string zip)
+{
+	streetAddress1 = st1;
+	city = cty;
+	state = statE;
+	zipCode = zip;
+}
+
+Address::Address(std::string street1, std::string street2, std::string City, std::string State, std::string zip_code)
+{
+	streetAddress1 = street1;
+	streetAddress2 = street2;
+	city = City;
+	state = State;
+	zipCode = zip_code;
+}
+
+std::string Address:: getCity()
+{
+	return city;
+}
+
+std::string Address::getStreetAddress1()
+{
+	return streetAddress1;
+}
+
+std::string Address::getStreetAddress2()
+{
+	return streetAddress2;
+}
+
+std::string Address::getState()
+{
+	return state;
+}
+
+std::string Address::getZipcode()
+{
+	return zipCode;
+}
