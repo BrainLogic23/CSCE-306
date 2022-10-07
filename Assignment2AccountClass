@@ -1,0 +1,38 @@
+// AccountMain.cpp
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+
+#include "Account.cpp"
+
+using namespace std;
+
+
+int main()
+{
+	Account acc1; // instantiate OBJECT of class Account
+	acc1.setBalance(55000);
+	acc1.setID(123456);
+	
+	//Account acc2("main st", "unit B", "Napeville", "Illinois", "60565"); //error here
+	Account acc2;
+	acc2.setAnnualInterestRate(1.8);
+	acc2.setBalance(20000);
+	
+	
+
+	cout << "\nCustomer City: " << acc1.get_customer_city() << endl;
+	cout << "Current Balance " << acc1.getBalance();
+	cout << "Current ID: " << acc1.getID();
+	cout << "\nCurrent Balance: " << acc2.getBalance();
+
+	acc2.deposit(50);
+	
+
+	cout << "\nNew Balance: " << acc2.getBalance();
+	cout << "\nCustomer City: " << acc2.get_customer_city();
+	cout << "\n" << acc2.get_customer_state();
+	
+
+	return 0;
+}
